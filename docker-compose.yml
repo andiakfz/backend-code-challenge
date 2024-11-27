@@ -1,0 +1,19 @@
+services:
+  portlocator.database:
+    image: postgres:latest
+    container_name: portlocator-database
+    environment:
+      - POSTGRES_DB=portlocator
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+       - 5432:5432
+
+  # portlocator.api:
+  #   image: ${DOCKER_REGISTRY-}portlocatorapi
+  #   container_name: portlocator-api
+  #   ports:
+  #       - 5000:5000
+  #   build:
+  #     context: .
+  #     dockerfile: src\portlocator.Api\Dockerfile
