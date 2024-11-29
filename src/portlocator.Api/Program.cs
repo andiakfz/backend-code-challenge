@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Diagnostics;
+using portlocator.Api.ExceptionHandler;
 using portlocator.Api.Registration;
 using portlocator.Application;
 using portlocator.Infrastructure;
@@ -20,6 +21,7 @@ builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
 
+builder.Services.AddSingleton<IExceptionHandler, GlobalExceptionHandler>();
 builder.Services.AddExceptionHandler(options =>
 {
     options.ExceptionHandler = async context =>
@@ -36,6 +38,8 @@ builder.Services.AddExceptionHandler(options =>
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -43,8 +47,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.ApplyMigrations(builder.Configuration);
 }
-
-app.UseExceptionHandler();
 
 app.MapControllers();
 

@@ -1,5 +1,5 @@
 ﻿using portlocator.Domain.Roles;
-using portlocator.Domain.ShipCrews;
+using portlocator.Domain.ShipAssignments;
 using portlocator.Domain.Ships;
 
 namespace portlocator.Domain.Users
@@ -11,6 +11,6 @@ namespace portlocator.Domain.Users
         public string Name { get; set; }
 
         public Role Role { get; set; }
-        public List<ShipCrew> ShipCrews { get; set; }
+        public List<ShipAssignment> ShipAssignments { get; set; }
     }
 }

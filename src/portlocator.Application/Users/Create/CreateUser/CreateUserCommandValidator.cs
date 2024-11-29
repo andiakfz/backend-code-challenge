@@ -1,15 +1,10 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace portlocator.Application.Users.AddUser
+namespace portlocator.Application.Users.Create.CreateUser
 {
-    public class AddUserCommandValidator : AbstractValidator<AddUserCommand>
+    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {
-        public AddUserCommandValidator()
+        public CreateUserCommandValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty()

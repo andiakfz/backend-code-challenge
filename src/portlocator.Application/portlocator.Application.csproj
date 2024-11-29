@@ -17,13 +17,4 @@
     <ProjectReference Include="..\portlocator.Shared\portlocator.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Ships\Get\GetAllShip\" />
-    <Folder Include="Ships\Get\GetShipsByUserId\" />
-    <Folder Include="Ships\Get\GetUnassignedShip\" />
-    <Folder Include="Ships\Create\" />
-    <Folder Include="Ships\Update\" />
-    <Folder Include="Users\UpdateShipAssignment\" />
-  </ItemGroup>
-
 </Project>

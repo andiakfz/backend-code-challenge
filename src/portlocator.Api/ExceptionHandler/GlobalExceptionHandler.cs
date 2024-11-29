@@ -3,7 +3,7 @@ using portlocator.Shared;
 
 namespace portlocator.Api.ExceptionHandler
 {
-    internal sealed class GlobalExceptionHandler : IExceptionHandler
+    public sealed class GlobalExceptionHandler : IExceptionHandler
     {
         private readonly ILogger<GlobalExceptionHandler> _log;
         public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log)
@@ -15,7 +15,7 @@ namespace portlocator.Api.ExceptionHandler
         {
             _log.LogError(exception, "System Failure: Unhandled Exception");
 
-            var response = Result.Failure(exception.Message);
+            var response = Result.Failure<object>(null,exception.Message);
 
             httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
 

@@ -10,18 +10,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace portlocator.Application.Users.AddUser
+namespace portlocator.Application.Users.Create.CreateUser
 {
-    public sealed record AddUserCommand(string Name, Guid RoleId) : ICommand<Guid>;
-
-    internal sealed class AddUserCommandHandler : ICommandHandler<AddUserCommand, Guid>
+    public sealed record CreateUserCommand(string Name, Guid RoleId) : ICommand<Guid>;
+    internal sealed class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Guid>
     {
         private readonly AppDbContext _context;
-        public AddUserCommandHandler(AppDbContext context)
+        public CreateUserCommandHandler(AppDbContext context)
         {
             _context = context;
         }
-        public async Task<Result<Guid>> Handle(AddUserCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Guid>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             User? user = await _context.Users.SingleOrDefaultAsync(x => x.Name.ToLower().Trim() == request.Name.ToLower().Trim(), cancellationToken);
             Role? role = await _context.Roles.SingleOrDefaultAsync(x => x.Id == request.RoleId, cancellationToken);

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace portlocator.Domain.ShipCrews
+namespace portlocator.Domain.ShipAssignments
 {
-    public class ShipCrew
+    public class ShipAssignment
     {
         public Guid UserId { get; set; }
         public Guid ShipId { get; set; }

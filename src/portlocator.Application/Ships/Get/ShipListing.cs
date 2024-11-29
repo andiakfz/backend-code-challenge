@@ -1,16 +1,17 @@
-﻿using portlocator.Domain.ShipAssignments;
-using portlocator.Domain.Users;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace portlocator.Domain.Ships
+namespace portlocator.Application.Ships.Get
 {
-    public class Ship
+    public sealed class ShipListing
     {
         public Guid Id { get; set; }
         public string ShipName { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Velocity { get; set; }
-
-        public List<ShipAssignment> ShipAssignments { get; set; }
     }
 }

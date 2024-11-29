@@ -24,6 +24,7 @@ namespace portlocator.Shared
             Error error = new(500, message);
             return new Result(false, error);
         }
+        
 
         public static Result<T> Success<T>(T value) => new(value, true, null);
 
@@ -55,5 +56,7 @@ namespace portlocator.Shared
         {
             Value = value;
         }
+
+        public static Result<T> ValidationFailure(Error error) => new(default, false, error);
     }
 }

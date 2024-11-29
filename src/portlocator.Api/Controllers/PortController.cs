@@ -1,34 +1,32 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using portlocator.Application.Abstraction.Models;
-using portlocator.Application.Roles.Get;
+using portlocator.Application.Ports.Get.GetAllPorts;
+using portlocator.Application.Users.Get;
 using portlocator.Shared;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace portlocator.Api.Controllers
 {
     [ApiController]
-    [Route("api/role")]
-    public class RoleController : ControllerBase
+    [Route("api/port")]
+    public class PortController : ControllerBase
     {
         private readonly ISender _sender;
-        public RoleController(ISender sender)
+        public PortController(ISender sender)
         {
             _sender = sender;
         }
 
         [HttpGet]
         [SwaggerOperation(
-            Summary = "Get Roles",
-            Description = "Get All Roles with its ID and Role Name"
+            Summary = "Get All Ports",
+            Description = "Get All Ports in the System"
         )]
-        [SwaggerResponse(200, Type = typeof(Result<List<DictionaryModel>>))]
-        [SwaggerResponse(500, Type = typeof(Result<List<DictionaryModel>>))]
+        [SwaggerResponse(200, Type = typeof(Result<List<PortListing>>))]
+        [SwaggerResponse(500, Type = typeof(Result<List<PortListing>>))]
         public async Task<IResult> Get(CancellationToken cancellationToken)
         {
-            var query = new GetRolesQuery();
-
+            var query = new GetAllPortsQuery();
             var result = await _sender.Send(query, cancellationToken);
 
             return Results.Ok(result);

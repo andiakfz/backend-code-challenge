@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
 namespace portlocator.Shared.Extensions
 {
@@ -14,6 +15,17 @@ namespace portlocator.Shared.Extensions
             skip = skip < 0 ? 0 : skip;
 
             return source.Skip(skip).Take(limit);
+        }
+
+        public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, string? property, bool descending)
+        {
+            if (string.IsNullOrEmpty(property))
+            {
+                return source;
+            }
+
+            string clause = $"{property} {(descending ? "DESC" : "ASC")}";
+            return source.OrderBy(clause);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using portlocator.Domain.Ports;
 using portlocator.Domain.Roles;
-using portlocator.Domain.ShipCrews;
+using portlocator.Domain.ShipAssignments;
 using portlocator.Domain.Ships;
 using portlocator.Domain.Users;
 using System;
@@ -20,7 +20,7 @@ namespace portlocator.Infrastructure.Database
         public DbSet<Role> Roles { get; set; }
         public DbSet<Ship> Ships { get; set; }
         public DbSet<Port> Ports { get; set; }
-        public DbSet<ShipCrew> ShipCrews { get; set; }
+        public DbSet<ShipAssignment> ShipAssignments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
