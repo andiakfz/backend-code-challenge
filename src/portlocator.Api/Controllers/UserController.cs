@@ -5,6 +5,7 @@ using portlocator.Application.Users.Create.CreateUser;
 using portlocator.Application.Users.Get;
 using portlocator.Application.Users.Get.GetUsers;
 using portlocator.Application.Users.Get.ListUsers;
+using portlocator.Application.Users.Update.UpdateShipAssignment;
 using portlocator.Shared;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -37,7 +38,7 @@ namespace portlocator.Api.Controllers
         }
 
         [HttpGet]
-        [Route("List")]
+        [Route("list")]
         [SwaggerOperation(
             Summary = "Get List of User",
             Description = "Get List of User with Pagination"
@@ -80,6 +81,31 @@ namespace portlocator.Api.Controllers
         {
             var result = await _sender.Send(command, cancellationToken);
 
+            if (!result.IsSuccess)
+            {
+                return Results.BadRequest(result);
+            }
+
+            return Results.Ok(result);
+        }
+
+        [HttpPut]
+        [Route("assign")]
+        [SwaggerOperation(
+            Summary = "Update Ship Assignment",
+            Description = "Updates a user ships assignments"
+        )]
+        [SwaggerResponse(200, Type = typeof(Result<bool>))]
+        [SwaggerResponse(400, Type = typeof(Result<bool>))]
+        [SwaggerResponse(500, Type = typeof(Result<bool>))]
+        public async Task<IResult> UpdateShipAssignment(
+            Guid userId, 
+            [FromBody] List<Guid> shipIds, 
+            CancellationToken cancellationToken)
+        {
+            var command = new UpdateShipAssigmentCommand(userId, shipIds);
+
+            var result = await _sender.Send(command, cancellationToken);
             if (!result.IsSuccess)
             {
                 return Results.BadRequest(result);

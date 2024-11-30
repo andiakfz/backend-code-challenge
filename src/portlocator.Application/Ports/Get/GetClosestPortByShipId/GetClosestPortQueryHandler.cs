@@ -12,8 +12,8 @@ using static portlocator.Shared.Helpers.CalculationHelper;
 
 namespace portlocator.Application.Ports.Get.GetClosestPortByShipId
 {
-    public sealed record GetClosestPortQuery(Guid ShipId) : ICommand<PortDetails>;
-    internal sealed class GetClosestPortQueryHandler : ICommandHandler<GetClosestPortQuery, PortDetails>
+    public sealed record GetClosestPortQuery(Guid ShipId) : IQuery<PortDetails>;
+    internal sealed class GetClosestPortQueryHandler : IQueryHandler<GetClosestPortQuery, PortDetails>
     {
         private readonly AppDbContext _context;
         public GetClosestPortQueryHandler(AppDbContext context)
@@ -29,24 +29,32 @@ namespace portlocator.Application.Ports.Get.GetClosestPortByShipId
                 return Result.BadRequest<PortDetails>(null, "Ship with this ID not found.");
             }
 
-            var portDetail = _context.Ports.AsNoTracking()
-                                           .Select(x => new PortDetails
-                                           {
-                                               PortId = x.Id,
-                                               PortName = x.PortName,
-                                               Latitude = x.Latitude,
-                                               Longitude = x.Longitude,
-                                               ShipLatitude = ship.Latitude,
-                                               ShipLongitude = ship.Longitude,
-                                               ShipVelocity = ship.Velocity,
-                                           
-                                               VelocityInKmh = VelocityToKmh(ship.Velocity),
-                                               Distance = CalculateGeoDistance(ship.Latitude, ship.Longitude, x.Latitude, x.Longitude)
-                                           })
-                                           .OrderBy(x => x.Distance)
-                                           .First();
+            var query = _context.Ports.AsNoTracking()
+                                      .Select(x => new
+                                      {
+                                          x.Id,
+                                          x.PortName,
+                                          x.Latitude,
+                                          x.Longitude
+                                      })
+                                      .AsEnumerable();
 
-            var etaTime = CalculateETA(portDetail.Distance, portDetail.VelocityInKmh);
+            var portDetail = query.Select(x => new PortDetails
+                                  {
+                                      PortId = x.Id,
+                                      PortName = x.PortName,
+                                      Latitude = x.Latitude,
+                                      Longitude = x.Longitude,
+                                      ShipLatitude = ship.Latitude,
+                                      ShipLongitude = ship.Longitude,
+                                      ShipVelocity = ship.Velocity,
+
+                                      Distance = CalculateGeoDistance(ship.Latitude, ship.Longitude, x.Latitude, x.Longitude)
+                                  })
+                                  .OrderBy(x => x.Distance)
+                                  .First();
+
+            var etaTime = CalculateETA(portDetail.Distance, portDetail.ShipVelocity);
             portDetail.EstimatedArrivalTime = $"{etaTime.Hours} Hour and {etaTime.Minutes} Minutes";
 
             return Result.Success(portDetail);

@@ -33,14 +33,14 @@ namespace portlocator.Application.Ships.Update.UpdateVelocity
                 return Result.BadRequest(false, "Ship with this ID not found.");
             }
 
-            var transaction = _context.Database.BeginTransaction();
+            var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
             try
             {
                 ship.Velocity = request.Velocity;
 
                 await _context.SaveChangesAsync(cancellationToken);
 
-                transaction.Commit();
+                await transaction.CommitAsync(cancellationToken);
 
                 return Result.Success(true);
             }
@@ -48,7 +48,7 @@ namespace portlocator.Application.Ships.Update.UpdateVelocity
             {
                 _logger.LogError("Error Updating Data => {Message}", ex.Message);
 
-                transaction.Rollback();
+                await transaction.RollbackAsync(cancellationToken);
 
                 return Result.Failure(false, "Failed to update due to database error.");
             }
@@ -56,7 +56,7 @@ namespace portlocator.Application.Ships.Update.UpdateVelocity
             {
                 _logger.LogError("Error Updating Data => {Message}", ex.Message);
 
-                transaction.Rollback();
+                await transaction.RollbackAsync(cancellationToken);
 
                 return Result.Failure(false, "Failed to update due to unexpected error.");
             }

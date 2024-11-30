@@ -35,7 +35,7 @@ namespace portlocator.Application.Ships.Create
                 return Result.BadRequest(Guid.Empty, "Ship with this name already exist.");
             }
 
-            Ship newShip = new Ship
+            Ship newShip = new()
             {
                 ShipName = request.Name,
                 Latitude = request.Latitude,

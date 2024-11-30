@@ -11,10 +11,10 @@ namespace portlocator.Application.Users.Get
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Role { get; set; }
-        public List<UserCrewListing> AssignedTo { get; set; }
+        public List<UserAssignmentListing> AssignedTo { get; set; }
     }
 
-    public sealed class UserCrewListing
+    public sealed class UserAssignmentListing
     {
         public Guid ShipId { get; set; }
         public string ShipName { get; set; }

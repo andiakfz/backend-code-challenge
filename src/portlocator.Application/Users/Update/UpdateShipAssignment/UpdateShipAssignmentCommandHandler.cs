@@ -30,7 +30,7 @@ namespace portlocator.Application.Users.Update.UpdateShipAssignment
                 return Result.BadRequest(false, "User with this ID not found.");
             }
 
-            var transaction = _context.Database.BeginTransaction();
+            var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
             try
             {
                 // REMOVE EXISTING ASSIGNMENT
@@ -47,7 +47,7 @@ namespace portlocator.Application.Users.Update.UpdateShipAssignment
                 _context.ShipAssignments.AddRange(newAssignment);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                transaction.Commit();
+                await transaction.CommitAsync(cancellationToken);
 
                 return Result.Success(true);
             }
@@ -55,7 +55,7 @@ namespace portlocator.Application.Users.Update.UpdateShipAssignment
             {
                 _logger.LogError("Error Updating Data => {Message}", ex.Message);
 
-                transaction.Rollback();
+                await transaction.RollbackAsync(cancellationToken);
 
                 return Result.Failure(false, "Failed to update due to database error.");
             }
@@ -63,7 +63,7 @@ namespace portlocator.Application.Users.Update.UpdateShipAssignment
             {
                 _logger.LogError("Error Updating Data => {Message}", ex.Message);
 
-                transaction.Rollback();
+                await transaction.RollbackAsync(cancellationToken);
 
                 return Result.Failure(false, "Failed to update due to server error.");
             }

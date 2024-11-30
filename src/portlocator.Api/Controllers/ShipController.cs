@@ -8,6 +8,7 @@ using portlocator.Application.Ships.Get;
 using portlocator.Application.Ships.Get.GetShips;
 using portlocator.Application.Ships.Get.GetShipsByUserId;
 using portlocator.Application.Ships.Get.GetUnassignedShips;
+using portlocator.Application.Ships.Update.UpdateVelocity;
 using portlocator.Shared;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -83,10 +84,32 @@ namespace portlocator.Api.Controllers
             Summary = "Create Ship",
             Description = "Create a new Ship data"
         )]
-        [SwaggerResponse(200, Type = typeof(Result<List<ShipListing>>))]
-        [SwaggerResponse(500, Type = typeof(Result<List<ShipListing>>))]
+        [SwaggerResponse(200, Type = typeof(Result<Guid>))]
+        [SwaggerResponse(400, Type = typeof(Result<Guid>))]
+        [SwaggerResponse(500, Type = typeof(Result<Guid>))]
         public async Task<IResult> Create(CreateShipCommand command, CancellationToken cancellationToken)
         {
+            var result = await _sender.Send(command, cancellationToken);
+            if (!result.IsSuccess)
+            {
+                return Results.BadRequest(result);
+            }
+
+            return Results.Ok(result);
+        }
+
+        [HttpPut]
+        [Route("velocity")]
+        [SwaggerOperation(
+            Summary = "Update Velocity",
+            Description = "Updates a ship velocity by Ship Id"
+        )]
+        [SwaggerResponse(200, Type = typeof(Result<bool>))]
+        [SwaggerResponse(500, Type = typeof(Result<bool>))]
+        public async Task<IResult> UpdateVelocity(Guid shipId, double velocity, CancellationToken cancellationToken)
+        {
+            var command = new UpdateShipVelocityCommand(shipId, velocity);
+
             var result = await _sender.Send(command, cancellationToken);
             if (!result.IsSuccess)
             {

@@ -43,10 +43,5 @@ namespace portlocator.Shared.Helpers
         {
             return degrees * Math.PI / 180;
         }
-
-        public static double VelocityToKmh(double velocity)
-        {
-            return velocity * 3.6;
-        }
     }
 }

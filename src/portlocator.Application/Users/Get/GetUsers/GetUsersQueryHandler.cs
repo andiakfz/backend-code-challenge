@@ -25,7 +25,7 @@ namespace portlocator.Application.Users.Get.GetUsers
                                           Id = x.Id,
                                           Name = x.Name,
                                           Role = x.Role.RoleName,
-                                          AssignedTo = x.ShipAssignments.Select(x => new UserCrewListing
+                                          AssignedTo = x.ShipAssignments.Select(x => new UserAssignmentListing
                                           {
                                               ShipId = x.ShipId,
                                               ShipName = x.Ship.ShipName
