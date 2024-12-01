@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "Database": "Host=localhost;Port=5400;Database=portlocator-test;Username=postgres;Password=postgres;Include Error Detail=true"
+  }
+}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using portlocator.Application.Abstraction.Messaging;
 using portlocator.Domain.Ships;
+using portlocator.Infrastructure;
 using portlocator.Infrastructure.Database;
 using portlocator.Shared;
 using System;
@@ -19,7 +20,7 @@ namespace portlocator.Application.Ships.Create
         public double Velocity { get; set; }
     }
 
-    internal sealed class CreateShipCommandHandler : ICommandHandler<CreateShipCommand, Guid>
+    public sealed class CreateShipCommandHandler : ICommandHandler<CreateShipCommand, Guid>
     {
         private readonly AppDbContext _context;
         public CreateShipCommandHandler(AppDbContext context)

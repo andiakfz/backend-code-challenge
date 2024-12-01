@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace portlocator.Infrastructure.Seeder
+namespace portlocator.Tests.Fakes
 {
-    public class FakePortModel
+    public class FakeShipModel
     {
-        public string PortName { get; set; }
+        public string ShipName { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public double Velocity { get; set; }
     }
 }

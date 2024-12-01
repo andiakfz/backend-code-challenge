@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace portlocator.Application.Ships.Update.UpdateVelocity
 {
     public sealed record UpdateShipVelocityCommand(Guid ShipId, double Velocity) : ICommand<bool>;
-    internal sealed class UpdateShipVelocityCommandHandler : ICommandHandler<UpdateShipVelocityCommand, bool>
+    public sealed class UpdateShipVelocityCommandHandler : ICommandHandler<UpdateShipVelocityCommand, bool>
     {
         private readonly AppDbContext _context;
         private readonly ILogger<UpdateShipVelocityCommandHandler> _logger;

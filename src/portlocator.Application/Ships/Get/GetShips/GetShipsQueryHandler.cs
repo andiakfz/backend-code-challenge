@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace portlocator.Application.Ships.Get.GetShips
 {
     public sealed record GetShipsQuery() : IQuery<List<ShipListing>>;
-    internal sealed class GetShipsQueryHandler : IQueryHandler<GetShipsQuery, List<ShipListing>>
+    public sealed class GetShipsQueryHandler : IQueryHandler<GetShipsQuery, List<ShipListing>>
     {
         private readonly AppDbContext _context;
         public GetShipsQueryHandler(AppDbContext context)

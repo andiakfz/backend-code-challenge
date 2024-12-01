@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace portlocator.Application.Ships.Get.GetUnassignedShips
 {
     public sealed record GetUnassignedShipsQuery() : IQuery<List<ShipListing>>;
-    internal sealed class GetUnassignedShipsQueryHandler : IQueryHandler<GetUnassignedShipsQuery, List<ShipListing>>
+    public sealed class GetUnassignedShipsQueryHandler : IQueryHandler<GetUnassignedShipsQuery, List<ShipListing>>
     {
         private readonly AppDbContext _context;
         public GetUnassignedShipsQueryHandler(AppDbContext context)

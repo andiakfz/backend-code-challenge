@@ -55,7 +55,16 @@ namespace portlocator.Application.Ports.Get.GetClosestPortByShipId
                                   .First();
 
             var etaTime = CalculateETA(portDetail.Distance, portDetail.ShipVelocity);
-            portDetail.EstimatedArrivalTime = $"{etaTime.Hours} Hour and {etaTime.Minutes} Minutes";
+
+            if (etaTime == TimeSpan.Zero)
+            {
+                portDetail.EstimatedArrivalTime = "Could not be determined due to Zero ship velocity.";
+            }
+            else
+            {
+                portDetail.EstimatedArrivalTime = $"{etaTime.Hours} Hour and {etaTime.Minutes} Minutes.";
+            }
+            
 
             return Result.Success(portDetail);
         }

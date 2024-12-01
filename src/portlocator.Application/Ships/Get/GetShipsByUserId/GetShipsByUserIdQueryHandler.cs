@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace portlocator.Application.Ships.Get.GetShipsByUserId
 {
     public sealed record GetShipsByUserIdQuery(Guid UserId) : IQuery<List<ShipListing>>;
-    internal sealed class GetShipsByUserIdQueryHandler : IQueryHandler<GetShipsByUserIdQuery, List<ShipListing>>
+    public sealed class GetShipsByUserIdQueryHandler : IQueryHandler<GetShipsByUserIdQuery, List<ShipListing>>
     {
         private readonly AppDbContext _context;
         public GetShipsByUserIdQueryHandler(AppDbContext context)

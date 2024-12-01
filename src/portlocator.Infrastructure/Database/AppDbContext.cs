@@ -12,15 +12,15 @@ using System.Threading.Tasks;
 
 namespace portlocator.Infrastructure.Database
 {
-    public sealed class AppDbContext : DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<Ship> Ships { get; set; }
-        public DbSet<Port> Ports { get; set; }
-        public DbSet<ShipAssignment> ShipAssignments { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Ship> Ships { get; set; }
+        public virtual DbSet<Port> Ports { get; set; }
+        public virtual DbSet<ShipAssignment> ShipAssignments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

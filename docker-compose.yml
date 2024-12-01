@@ -9,6 +9,16 @@ services:
     ports:
        - 5432:5432
 
+  portlocator.test.database:
+    image: postgres:latest
+    container_name: portlocator-test-database
+    environment:
+      - POSTGRES_DB=portlocator-test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+       - 5400:5432
+
   # portlocator.api:
   #   image: ${DOCKER_REGISTRY-}portlocatorapi
   #   container_name: portlocator-api

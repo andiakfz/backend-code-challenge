@@ -48,7 +48,7 @@ namespace portlocator.Infrastructure.Seeder
                 return;
             }
 
-            var fakes = new Faker<FakePortModel>()
+            var fakes = new Faker<SeedPortModel>()
                 .RuleFor(x => x.PortName, f => $"Port {f.Address.City()}")
                 .RuleFor(x => x.Latitude, f => f.Address.Latitude())
                 .RuleFor(x => x.Longitude, f => f.Address.Longitude());

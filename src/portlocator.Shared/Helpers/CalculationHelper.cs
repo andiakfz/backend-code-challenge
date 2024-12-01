@@ -16,6 +16,10 @@ namespace portlocator.Shared.Helpers
             {
                 throw new ArgumentException("Invalid velocity number");
             }
+            else if (velocityKmh == 0)
+            {
+                return TimeSpan.Zero;
+            }
 
             double etaInHour = distanceKmh / velocityKmh;
             TimeSpan eta = TimeSpan.FromHours(etaInHour);
