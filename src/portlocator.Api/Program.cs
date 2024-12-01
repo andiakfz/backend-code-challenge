@@ -13,7 +13,6 @@ builder.Configuration
 builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(cfg => cfg.EnableAnnotations());
 
@@ -40,13 +39,9 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.ApplyMigrations(builder.Configuration);
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+app.ApplyMigrations(builder.Configuration);
 
 app.MapControllers();
 
