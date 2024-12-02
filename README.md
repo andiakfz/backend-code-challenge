@@ -9,8 +9,7 @@ Clone this project and navigate to the repo directory
 git clone "https://github.com/andiakfz/backend-code-challenge"
 ```
 
-Install docker from official site: [Docker]("https://www.docker.com/") <br>
-If you're using docker engine: [Docker Engine]("https://docs.docker.com/engine/install/")
+Install docker from official site: "https://www.docker.com/"
 
 ## Guide
 
