@@ -52,33 +52,13 @@ namespace portlocator.Tests.Application
         public async Task CreateShip_ShouldReturnBadRequest_ShipExist()
         {
             // Arrange
-            var command = new CreateShipCommand();
-
-            if (_context.Ships.Any())
+            var command = new CreateShipCommand()
             {
-                var ship = _context.Ships.First();
-                command.Name = ship.ShipName;
-                command.Latitude = ship.Latitude;
-                command.Longitude = ship.Longitude;
-                command.Velocity = ship.Velocity;
-            }
-            else
-            {
-                var fakeShip = FakeHelper.GenerateRandomShip();
-                _context.Ships.Add(new Ship
-                {
-                    ShipName = fakeShip.ShipName,
-                    Latitude = fakeShip.Latitude,
-                    Longitude = fakeShip.Longitude,
-                    Velocity = fakeShip.Velocity
-                });
-                _context.SaveChanges();
-
-                command.Name = fakeShip.ShipName;
-                command.Latitude = fakeShip.Latitude;
-                command.Longitude = fakeShip.Longitude;
-                command.Velocity = fakeShip.Velocity;
-            }
+                Name = "Ship Administrator",
+                Latitude = 86.721,
+                Longitude = 122.1134,
+                Velocity = 300
+            };
 
             // Act
             var result = await _sender.Send(command, CancellationToken.None);

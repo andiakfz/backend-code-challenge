@@ -22,6 +22,9 @@ namespace portlocator.Tests
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IConfiguration _configuration;
 
+        private static bool _isSeederExecuted = false;
+        private static readonly SemaphoreSlim _seederSemaphore = new SemaphoreSlim(1, 1);
+
         public Setup()
         {
             _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
@@ -58,14 +61,25 @@ namespace portlocator.Tests
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-                dbContext.Database.ExecuteSqlRaw("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"");
+                //dbContext.Database.ExecuteSqlRaw("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"");
 
-                //await dbContext.Database.EnsureCreatedAsync();
                 await dbContext.Database.MigrateAsync();
 
                 // Seed Default
-                var seeder = new TestSeeder(dbContext);
-                await seeder.SeedAsync();
+                await _seederSemaphore.WaitAsync();
+                try
+                {
+                    if (!_isSeederExecuted)
+                    {
+                        _isSeederExecuted = true;
+                        var seeder = new TestSeeder(dbContext);
+                        await seeder.SeedAsync();
+                    }
+                }
+                finally
+                {
+                    _seederSemaphore.Release();
+                }
             }
         }
 
@@ -73,6 +87,5 @@ namespace portlocator.Tests
         {
             return Task.CompletedTask;
         }
-
     }
 }

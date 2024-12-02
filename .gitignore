@@ -13,3 +13,4 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+/test/portlocator.Tests/Properties/PublishProfiles

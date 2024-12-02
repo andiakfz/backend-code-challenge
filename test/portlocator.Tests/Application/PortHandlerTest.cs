@@ -42,7 +42,7 @@ namespace portlocator.Tests.Application
         public async Task GetClosestPort_ShouldReturnSuccess_NormalCase()
         {
             // Arrange
-            var ship = _context.Ships.First();
+            var ship = _context.Ships.Where(x => x.Velocity >= 0).First();
             var query = new GetClosestPortQuery(ship.Id);
 
             // Act

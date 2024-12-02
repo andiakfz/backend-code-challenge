@@ -7,6 +7,8 @@ services:
       dockerfile: src/portlocator.Api/Dockerfile
     environment:
       - ASPNETCORE_HTTP_PORTS=5000
+    depends_on:
+      - portlocator.database
     ports:
       - "5000:5000"
 
@@ -19,7 +21,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
        - 5432:5432
-
+  
   portlocator.test.database:
     image: postgres:latest
     container_name: portlocator-test-database

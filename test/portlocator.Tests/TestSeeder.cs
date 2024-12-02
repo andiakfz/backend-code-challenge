@@ -82,8 +82,8 @@ namespace portlocator.Tests
                 return;
             }
 
-            Role superAdmin = _context.Roles.AsNoTracking().Single(x => x.RoleName == "Super Admin");
-            Role admin = _context.Roles.AsNoTracking().Single(x => x.RoleName == "Admin");
+            Role superAdmin = _context.Roles.AsNoTracking().First(x => x.RoleName == "Super Admin");
+            Role admin = _context.Roles.AsNoTracking().First(x => x.RoleName == "Admin");
             User user = new()
             {
                 Name = "Admin Tester",

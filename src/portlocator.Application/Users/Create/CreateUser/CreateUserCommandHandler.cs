@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using portlocator.Application.Abstraction.Messaging;
 using portlocator.Domain.Roles;
+using portlocator.Domain.ShipAssignments;
 using portlocator.Domain.Users;
 using portlocator.Infrastructure.Database;
 using portlocator.Shared;
@@ -34,7 +35,7 @@ namespace portlocator.Application.Users.Create.CreateUser
                 return Result.BadRequest(Guid.Empty, "Role with this ID not found.");
             }
 
-            User newUser = new User
+            User newUser = new()
             {
                 Name = request.Name,
                 RoleId = request.RoleId

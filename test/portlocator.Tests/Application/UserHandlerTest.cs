@@ -30,8 +30,7 @@ namespace portlocator.Tests.Application
         {
             // Arrange
             var fakeUserName = FakeHelper.GenerateRandomUser();
-            var roleName = FakeHelper.GetRandomSetRoles();
-            var roleId = _context.Roles.First(x => x.RoleName == roleName).Id;
+            var roleId = _context.Roles.First().Id;
 
             // Act
             var command = new CreateUserCommand(fakeUserName.Name, roleId);
@@ -116,7 +115,7 @@ namespace portlocator.Tests.Application
         {
             // Arrange
             var ships = _context.Ships.AsNoTracking().Select(x => x.Id).ToList();
-            var user = _context.Users.First();
+            var user = _context.Users.AsNoTracking().First();
 
             // Act
             var command = new UpdateShipAssigmentCommand(user.Id, ships);
